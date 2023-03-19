@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS `hl_blog`;
+CREATE TABLE `hl_blog`  (
+                            `blog_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '博客表主键id',
+                            `blog_title` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '博客标题',
+                            `blog_sub_url` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '博客自定义路径url',
+                            `blog_cover_image` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '博客封面图',
+                            `blog_content` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '博客内容',
+                            `blog_category_id` int(0) NOT NULL COMMENT '博客分类id',
+                            `blog_tags` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '博客标签',
+                            `blog_status` tinyint(0) NOT NULL DEFAULT 0 COMMENT '0-草稿 1-发布',
+                            `blog_views` bigint(0) NOT NULL DEFAULT 0 COMMENT '阅读量',
+                            `is_top` tinyint(0) NOT NULL DEFAULT 0 COMMENT '是否置顶,1是 0否',
+                            `enable_comment` tinyint(0) NOT NULL DEFAULT 0 COMMENT '0-允许评论 1-不允许评论',
+                            `del_flag` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除 0=否 1=是',
+                            `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '添加时间',
+                            `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
+                            PRIMARY KEY (`blog_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;

@@ -1,0 +1,4 @@
+# 项目排除路径
+/hl-admin/target/
+/hl-blog/target/
+/hl-framework/target/
