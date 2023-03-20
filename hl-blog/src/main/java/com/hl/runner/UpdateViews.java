@@ -22,7 +22,7 @@ public class UpdateViews {
 
     @Autowired
     BlogService blogService;
-    @Scheduled(cron = "* 0/5 * * * ?")
+    @Scheduled(cron = "0 0/10 * * * ?")
     public void updateViews(){
         System.out.println("定时任务执行");
         Map<String, Integer> map = redisCache.getCacheMap("blog:blogViews");

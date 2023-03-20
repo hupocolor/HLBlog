@@ -22,6 +22,10 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
       id-type: auto
+# swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path : /swagger-ui.html
 
 
 oss:

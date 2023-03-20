@@ -2,7 +2,6 @@ package com.hl.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hl.enums.AppHttpCodeEnum;
-import io.swagger.models.auth.In;
 
 import java.io.Serializable;
 

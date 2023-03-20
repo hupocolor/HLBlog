@@ -8,7 +8,6 @@ import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * @Author : hupo, 创建于:2023/3/12
@@ -43,9 +42,4 @@ public class BlogController {
         return blogService.updateViews(id);
     }
 
-//    @GetMapping("/test")
-//    public String getTest() throws Exception {
-//        Claims claims = JwtUtil.parseJWT("eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiNzdiN2VhZWQ5MmE0MWJjYjMxZDIyZjdlMGUxOGVlZCIsInN1YiI6IjEiLCJpc3MiOiJzZyIsImlhdCI6MTY3ODk2NzUwNSwiZXhwIjoxNjc5MDUzOTA1fQ.UHLVlUkpJ_-16IqTH29m6xp85PyUrrX5_rV7G8IVVGE");
-//        return claims.getSubject();
-//    }
 }
