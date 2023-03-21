@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hl.domain.mapper.RoleMapper">
+    <select id="selectRoleKeyByUserId" resultType="java.lang.String">
+        select role_key from sys_role left join sys_user_role on id = role_id where user_id = #{id};
+    </select>
+</mapper>

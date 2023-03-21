@@ -2,6 +2,7 @@ package com.hl.domain.service;
 
 import com.hl.domain.ResponseResult;
 import com.hl.domain.entity.User;
+import com.hl.domain.vo.AdminUserInfoVo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,4 +13,8 @@ public interface BlogLoginService {
     ResponseResult login(User user);
 
     ResponseResult logout();
+
+    ResponseResult adminLogin(User user);
+
+    ResponseResult<AdminUserInfoVo> getAdminInfo();
 }

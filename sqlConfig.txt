@@ -16,3 +16,22 @@ CREATE TABLE `hl_blog`  (
                             `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '修改时间',
                             PRIMARY KEY (`blog_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+CREATE TABLE sys_role (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       role_name VARCHAR(50) NOT NULL,
+                       role_key VARCHAR(50) NOT NULL,
+                       role_sort INT NOT NULL,
+                       status TINYINT DEFAULT 0,
+                       del_flag TINYINT DEFAULT 0,
+                       creat_by VARCHAR(50) NOT NULL,
+                       creat_time DATETIME NOT NULL,
+                       update_by VARCHAR(50),
+                       update_time DATETIME,
+                       remark VARCHAR(255)
+);
+
+create table sys_user_role(
+    user_id int,
+    role_id int
+)
