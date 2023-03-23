@@ -8,7 +8,9 @@ import com.hl.domain.dto.AddArticleDto;
 import com.hl.domain.entity.BlogTag;
 import com.hl.domain.mapper.BlogMapper;
 import com.hl.domain.entity.Blog;
+import com.hl.domain.mapper.BlogTagMapper;
 import com.hl.domain.mapper.CategoryMapper;
+import com.hl.domain.mapper.TagMapper;
 import com.hl.domain.service.BlogService;
 import com.hl.domain.service.BlogTagService;
 import com.hl.domain.service.CategoryService;
@@ -41,6 +43,8 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     RedisCache redisCache;
     @Autowired
     BlogTagService blogTagService;
+    @Autowired
+    TagMapper tagMapper;
 
     @Override
     public ResponseResult getHotList() {
@@ -125,6 +129,14 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         List<Blog> blogs = blogPage.getRecords();
         List<AddArticleDto> res = ArticleUtils.ListBlogToDto(blogs);
         return ResponseResult.okResult(new PageVo(res, blogPage.getTotal()));
+    }
+
+    @Override
+    public ResponseResult getAdminDetail(Long id) {
+        Blog blog = getById(id);
+        AddArticleDto dto = ArticleUtils.blogToDto(blog);
+        dto.setTags(tagMapper.selectByBlogId(id));
+        return ResponseResult.okResult(dto);
     }
 
 }

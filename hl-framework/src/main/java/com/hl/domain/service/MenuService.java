@@ -13,5 +13,7 @@ import com.hl.domain.entity.Menu;
 public interface MenuService extends IService<Menu> {
 
     ResponseResult getRouters();
+
+    ResponseResult getMenuList(String status, String menuName);
 }
 

@@ -38,6 +38,7 @@ public class ArticleUtils {
         dto.setIsComment(String.valueOf(blog.getEnableComment()));
         dto.setViewCount(blog.getBlogViews());
         dto.setCreateTime(blog.getCreateTime());
+        dto.setUpdateTime(blog.getUpdateTime());
         return dto;
     }
 

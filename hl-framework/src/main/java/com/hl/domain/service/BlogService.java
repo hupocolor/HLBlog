@@ -23,5 +23,7 @@ public interface BlogService extends IService<Blog> {
     ResponseResult add(AddArticleDto article);
 
     ResponseResult getListByKeyWords(Integer pageNum, Integer pageSize, String title, String summary);
+
+    ResponseResult getAdminDetail(Long id);
 }
 

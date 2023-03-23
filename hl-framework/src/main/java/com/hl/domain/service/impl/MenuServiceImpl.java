@@ -9,6 +9,7 @@ import com.hl.domain.service.MenuService;
 import com.hl.domain.vo.MenuVo;
 import com.hl.utils.BeanCopyUtils;
 import com.hl.utils.SecurityUtils;
+import io.jsonwebtoken.lang.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         res.put("menus",rootVos);
         return ResponseResult.okResult(res);
     }
+
+    @Override
+    public ResponseResult getMenuList(String status, String menuName) {
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.orderByDesc(Menu::getOrderNum);
+        if (Strings.hasText(status))
+            wrapper.eq(Menu::getStatus,status);
+        if (Strings.hasText(menuName))
+            wrapper.like(Menu::getMenuName,menuName);
+        return ResponseResult.okResult(list(wrapper));
+    }
+
     private List<MenuVo> getMenuList(Long MenuId,Long userId){
         if (userId == 1L) {
             LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
@@ -53,8 +66,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Menu::getParentId, MenuId);
         wrapper.orderByDesc(Menu::getMenuName);
-        wrapper.eq(Menu::getMenuType,"C").or().
-                eq(Menu::getMenuType,"M");
+        wrapper.and(i ->i.eq(Menu::getMenuType,"C").or().eq(Menu::getMenuType,"M"));
+//        wrapper.eq(Menu::getMenuType,"C").or().
+//        eq(Menu::getMenuType,"M");
         List<Menu> list = list(wrapper);
         HashSet<Long> menuIdByUserId = menuMapper.selectMenuIdByUserId(userId);
         //列表中存在菜单的id在哈希集合中,则移出
