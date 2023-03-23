@@ -8,6 +8,7 @@ import com.hl.domain.mapper.RoleMapper;
 import com.hl.domain.service.BlogLoginService;
 import com.hl.domain.vo.AdminUserInfoVo;
 import com.hl.domain.vo.BlogUserLoginVo;
+import com.hl.domain.vo.MenuVo;
 import com.hl.domain.vo.UserInfoVo;
 import com.hl.utils.BeanCopyUtils;
 import com.hl.utils.JwtUtil;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -106,4 +108,16 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         AdminUserInfoVo adminUserInfoVo = new AdminUserInfoVo(perms,roleKeys,BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class));
         return ResponseResult.okResult(adminUserInfoVo);
     }
+
+    @Override
+    public ResponseResult adminLogout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long id = loginUser.getUser().getId();
+        //获取userId
+        redisCache.deleteObject("login:"+id);
+        return ResponseResult.okResult();
+    }
+
+
 }

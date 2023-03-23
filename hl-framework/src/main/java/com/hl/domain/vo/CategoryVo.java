@@ -12,5 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryVo {
     private Integer CategoryId;
+    private Integer id;
     private String name;
+    private String description;
 }

@@ -5,6 +5,7 @@ import com.hl.domain.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -18,5 +19,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     List<String> selectPermsByUserId(@Param("id") Long id);
     List<String> selectPermsByAll();
+    HashSet<Long> selectMenuIdByUserId(@Param("id") Long id);
 }
 

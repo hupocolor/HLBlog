@@ -1,6 +1,7 @@
 package com.hl.domain.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hl.domain.ResponseResult;
 import com.hl.domain.entity.Menu;
 
 /**
@@ -11,5 +12,6 @@ import com.hl.domain.entity.Menu;
  */
 public interface MenuService extends IService<Menu> {
 
+    ResponseResult getRouters();
 }
 

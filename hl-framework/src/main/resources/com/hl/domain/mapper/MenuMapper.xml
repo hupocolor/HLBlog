@@ -14,4 +14,8 @@
         select sys_menu.perms from sys_menu
             where sys_menu.id in(select menu_id from sys_role_menu where sys_role_menu.role_id in (select sys_user_role.role_id from sys_user_role where user_id = #{id}))
     </select>
+    <select id="selectMenuIdByUserId" resultType="java.lang.Long">
+        select menu_id from sys_role_menu
+        where role_id in (select role_id where user_id = #{id})
+    </select>
 </mapper>

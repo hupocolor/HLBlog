@@ -17,4 +17,6 @@ public interface BlogLoginService {
     ResponseResult adminLogin(User user);
 
     ResponseResult<AdminUserInfoVo> getAdminInfo();
+
+    ResponseResult adminLogout();
 }

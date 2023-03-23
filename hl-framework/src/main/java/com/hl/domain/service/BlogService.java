@@ -2,6 +2,7 @@ package com.hl.domain.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hl.domain.ResponseResult;
+import com.hl.domain.dto.AddArticleDto;
 import com.hl.domain.entity.Blog;
 
 /**
@@ -18,5 +19,9 @@ public interface BlogService extends IService<Blog> {
     ResponseResult getDetail(Long id);
 
     ResponseResult updateViews(Long id);
+
+    ResponseResult add(AddArticleDto article);
+
+    ResponseResult getListByKeyWords(Integer pageNum, Integer pageSize, String title, String summary);
 }
 

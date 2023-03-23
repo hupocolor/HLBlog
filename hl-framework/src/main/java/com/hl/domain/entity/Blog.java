@@ -1,5 +1,6 @@
 package com.hl.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -51,8 +52,10 @@ public class Blog {
     //是否删除 0=否 1=是
     private Integer delFlag;
     //添加时间
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
     //修改时间
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
     //文章摘要
     private String blogSummary;
