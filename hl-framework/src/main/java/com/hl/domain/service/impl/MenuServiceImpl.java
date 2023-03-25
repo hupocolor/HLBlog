@@ -5,17 +5,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hl.domain.ResponseResult;
 import com.hl.domain.mapper.MenuMapper;
 import com.hl.domain.entity.Menu;
+import com.hl.domain.mapper.RoleMapper;
 import com.hl.domain.service.MenuService;
+import com.hl.domain.vo.MenuTreeNode;
 import com.hl.domain.vo.MenuVo;
+import com.hl.domain.vo.RoleAndMenuVo;
 import com.hl.utils.BeanCopyUtils;
 import com.hl.utils.SecurityUtils;
 import io.jsonwebtoken.lang.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * 菜单权限表(Menu)表服务实现类
@@ -52,6 +53,43 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         if (Strings.hasText(menuName))
             wrapper.like(Menu::getMenuName,menuName);
         return ResponseResult.okResult(list(wrapper));
+    }
+
+    @Override
+    public ResponseResult getTree(Long id) {
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Menu::getParentId,0L);
+        List<Menu> menus = list(wrapper);
+        List<MenuTreeNode> nodes = new ArrayList<>();
+        for (Menu menu : menus) {
+            MenuTreeNode treeNode = new MenuTreeNode(null,menu.getId(),menu.getMenuName(),menu.getParentId());
+            nodes.add(treeNode);
+        }
+        for (MenuTreeNode node : nodes) {
+            dfs(node);
+        }
+        RoleAndMenuVo roleAndMenuVo = new RoleAndMenuVo(nodes,menuMapper.selectMenuIdByRoleId(id));
+        return ResponseResult.okResult(roleAndMenuVo);
+    }
+
+    private void dfs(MenuTreeNode node) {
+        if (node == null)
+            return;
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Menu::getParentId,node.getId());
+        List<Menu> menus = list(wrapper);
+        if (menus ==null){
+            return;
+        }
+        List<MenuTreeNode> nodes = new ArrayList<>();
+        for (Menu menu : menus) {
+            MenuTreeNode treeNode = new MenuTreeNode(null,menu.getId(),menu.getMenuName(),menu.getParentId());
+            nodes.add(treeNode);
+        }
+        node.setChildren(nodes);
+        for (MenuTreeNode child : node.getChildren()) {
+            dfs(child);
+        }
     }
 
     private List<MenuVo> getMenuList(Long MenuId,Long userId){

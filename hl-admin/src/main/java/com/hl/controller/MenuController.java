@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hl.domain.ResponseResult;
 import com.hl.domain.entity.Menu;
 import com.hl.domain.service.MenuService;
+import com.hl.domain.service.RoleService;
 import com.hl.enums.AppHttpCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +49,10 @@ public class MenuController {
         }
         menuService.removeById(menuId);
         return ResponseResult.okResult();
+    }
+
+    @GetMapping("/roleMenuTreeselect/{id}")
+    public ResponseResult roleMenuTreeSelectById(@PathVariable Long id){
+        return menuService.getTree(id);
     }
 }

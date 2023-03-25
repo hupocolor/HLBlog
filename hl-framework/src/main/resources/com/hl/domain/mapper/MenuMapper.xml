@@ -18,4 +18,7 @@
         select menu_id from sys_role_menu
         where role_id in (select role_id where user_id = #{id})
     </select>
+    <select id="selectMenuIdByRoleId" resultType="java.lang.Long">
+        select menu_id from sys_role_menu where role_id = #{id}
+    </select>
 </mapper>
