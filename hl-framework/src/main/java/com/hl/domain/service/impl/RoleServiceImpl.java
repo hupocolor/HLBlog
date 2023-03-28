@@ -7,6 +7,7 @@ import com.hl.domain.ResponseResult;
 import com.hl.domain.mapper.RoleMapper;
 import com.hl.domain.entity.Role;
 import com.hl.domain.service.RoleService;
+import com.hl.domain.vo.PageVo;
 import com.hl.domain.vo.RoleVo;
 import com.hl.utils.BeanCopyUtils;
 import io.jsonwebtoken.lang.Strings;
@@ -36,8 +37,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             wrapper.like(Role::getRoleName,roleName);
         if (!Objects.isNull(status))
             wrapper.eq(Role::getStatus,status);
-        List<Role> records = page(new Page<>(pageNum, pageSize), wrapper).getRecords();
-        return ResponseResult.okResult(records);
+        Page<Role> page = new Page<>(pageNum, pageSize);
+        List<Role> records = page(page, wrapper).getRecords();
+        return ResponseResult.okResult(new PageVo(records,page(page, wrapper).getTotal()));
     }
 
     @Override
@@ -51,7 +53,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public ResponseResult updateRoleVo(RoleVo roleVo) {
         Role role = BeanCopyUtils.copyBean(roleVo, Role.class);
-        updateById(role);
+        saveOrUpdate(role);
         for (Long menuId : roleVo.getMenuIds()) {
             if (roleMapper.getRoleMenuList(role.getId(),menuId) != null){
                 roleMapper.insertRoleMenu(role.getId(),menuId);

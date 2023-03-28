@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hl.domain.ResponseResult;
 import com.hl.domain.mapper.MenuMapper;
 import com.hl.domain.entity.Menu;
-import com.hl.domain.mapper.RoleMapper;
 import com.hl.domain.service.MenuService;
 import com.hl.domain.vo.MenuTreeNode;
 import com.hl.domain.vo.MenuVo;
@@ -57,19 +56,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public ResponseResult getTree(Long id) {
-        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Menu::getParentId,0L);
-        List<Menu> menus = list(wrapper);
-        List<MenuTreeNode> nodes = new ArrayList<>();
-        for (Menu menu : menus) {
-            MenuTreeNode treeNode = new MenuTreeNode(null,menu.getId(),menu.getMenuName(),menu.getParentId());
-            nodes.add(treeNode);
-        }
-        for (MenuTreeNode node : nodes) {
-            dfs(node);
-        }
+        ArrayList<MenuTreeNode> nodes = getNodes();
         RoleAndMenuVo roleAndMenuVo = new RoleAndMenuVo(nodes,menuMapper.selectMenuIdByRoleId(id));
         return ResponseResult.okResult(roleAndMenuVo);
+    }
+
+    @Override
+    public ResponseResult getTreeAll() {
+        return ResponseResult.okResult(getNodes());
+    }
+
+    private static ArrayList<MenuTreeNode> getNodes() {
+        return new ArrayList<>();
     }
 
     private void dfs(MenuTreeNode node) {
@@ -112,6 +110,21 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         //列表中存在菜单的id在哈希集合中,则移出
         list.removeIf(menu -> menuIdByUserId.contains(menu.getId()));
         return BeanCopyUtils.copyBeanList(list(wrapper), MenuVo.class);
+    }
+
+    private List<MenuTreeNode> getTreeListAll(){
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Menu::getParentId,0L);
+        List<Menu> menus = list(wrapper);
+        List<MenuTreeNode> nodes = new ArrayList<>();
+        for (Menu menu : menus) {
+            MenuTreeNode treeNode = new MenuTreeNode(null,menu.getId(),menu.getMenuName(),menu.getParentId());
+            nodes.add(treeNode);
+        }
+        for (MenuTreeNode node : nodes) {
+            dfs(node);
+        }
+        return nodes;
     }
 }
 

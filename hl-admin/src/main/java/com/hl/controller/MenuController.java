@@ -55,4 +55,9 @@ public class MenuController {
     public ResponseResult roleMenuTreeSelectById(@PathVariable Long id){
         return menuService.getTree(id);
     }
+
+    @GetMapping("/treeselect")
+    public ResponseResult treeSelect(){
+        return menuService.getTreeAll();
+    }
 }

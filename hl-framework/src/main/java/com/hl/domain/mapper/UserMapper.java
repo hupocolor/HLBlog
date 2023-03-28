@@ -5,6 +5,8 @@ import com.hl.domain.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 用户表(User)表数据库访问层
  *
@@ -14,5 +16,10 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     User selectByUserName(@Param("userName") String userName);
+
+    void updateUserAndRole(@Param("userId") Long userId,@Param("roleId") Long roleId);
+
+    List<Long> selectRoleIdByUserId(@Param("userId") Long userId);
+    void deleteRoleByUserId(@Param("userId") Long userId);
 }
 

@@ -17,5 +17,7 @@ public interface MenuService extends IService<Menu> {
     ResponseResult getMenuList(String status, String menuName);
 
     ResponseResult getTree(Long id);
+
+    ResponseResult getTreeAll();
 }
 
