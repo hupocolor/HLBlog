@@ -29,6 +29,6 @@ springdoc:
 
 
 oss:
-  accessKey: y_wOp-OC8ePwvsIcnG_QNbJpTuHN0Kni9pMUJhHo
-  secretKey: BLULfDCq7Z69t-VXRKAd2JbFF9JQAMxsYP2kMPW1
+  accessKey: yourAccessKey
+  secretKey: yourSecretKey
   bucket: hnlg-blog
