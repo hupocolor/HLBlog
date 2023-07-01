@@ -3,6 +3,8 @@ package com.hl.domain.entity;
 import java.util.Date;
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -34,11 +36,13 @@ public class Role {
     private Integer delFlag;
     
     private String creatBy;
-    
+
+    @TableField(fill = FieldFill.INSERT)
     private Date creatTime;
     
     private String updateBy;
-    
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
     
     private String remark;

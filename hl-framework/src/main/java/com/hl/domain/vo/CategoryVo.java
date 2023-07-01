@@ -11,8 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryVo {
-    private Integer CategoryId;
+    private Integer categoryId;
     private Integer id;
     private String name;
     private String description;
+    public CategoryVo idToCategoryId(){
+        this.categoryId = this.id;
+        return this;
+    }
+    public CategoryVo categoryIdToId(){
+        this.id = categoryId;
+        return this;
+    }
 }

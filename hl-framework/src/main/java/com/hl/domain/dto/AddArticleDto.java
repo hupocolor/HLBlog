@@ -30,7 +30,7 @@ public class AddArticleDto {
     private String thumbnail;
     //是否置顶（0否，1是）
     private String isTop;
-    //状态（0已发布，1草稿）
+    //状态（1已发布，0草稿）
     private String status;
     //访问量
     private Long viewCount;

@@ -47,7 +47,7 @@ public class FileServiceImpl implements FileService {
 
     private String uploadOss(MultipartFile imgFile, String path){
         //构造一个带指定 Region 对象的配置类
-        Configuration cfg = new Configuration(Region.huanan());
+        Configuration cfg = new Configuration(Region.xinjiapo());
         cfg.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;// 指定分片上传版本
         //...其他参数参考类注释
 
@@ -70,7 +70,7 @@ public class FileServiceImpl implements FileService {
                 DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
                 System.out.println(putRet.key);
                 System.out.println(putRet.hash);
-                return "http://rrpq1gqi6.hn-bkt.clouddn.com/"+key;
+                return "http://rw2m0x7xz.sabkt.gdipper.com/"+key;
             } catch (QiniuException ex) {
                 Response r = ex.response;
                 System.err.println(r.toString());

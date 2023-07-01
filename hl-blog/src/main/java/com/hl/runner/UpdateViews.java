@@ -22,12 +22,15 @@ public class UpdateViews {
 
     @Autowired
     BlogService blogService;
-    @Scheduled(cron = "0 0/10 * * * ?")
+    //每20分钟更新一次
+    @Scheduled(cron = "* */20 * * * ?")
     public void updateViews(){
         System.out.println("定时任务执行");
         Map<String, Integer> map = redisCache.getCacheMap("blog:blogViews");
         List<Blog> blogs = blogService.list();
+        System.out.println(map);
         for (Blog blog : blogs) {
+//            blog.setBlogViews(Long.valueOf(map.get(blog.getBlogId().toString())));
             blog.setBlogViews(Long.valueOf(map.get(blog.getBlogId().toString())));
             blogService.updateById(blog);
         }

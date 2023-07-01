@@ -36,8 +36,9 @@ public class AdminUserController {
         return userService.getRoleByUserId(id);
     }
 
-    @PutMapping("id")
+    @PutMapping()
     public ResponseResult updateUserRoles(@RequestBody AddUserDto userDto){
         return userService.updateUserRoles(userDto);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.hl.domain.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hl.domain.mapper.CategoryMapper;
 import com.hl.domain.ResponseResult;
@@ -9,9 +10,11 @@ import com.hl.domain.entity.Category;
 import com.hl.domain.service.BlogService;
 import com.hl.domain.service.CategoryService;
 import com.hl.domain.vo.CategoryVo;
+import com.hl.domain.vo.PageVo;
 import com.hl.enums.ArticleStatus;
 import com.hl.enums.CategoryStatus;
 import com.hl.utils.BeanCopyUtils;
+import io.jsonwebtoken.lang.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,9 +44,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
                 .map(blog -> blog.getBlogCategoryId())
                 .collect(Collectors.toSet());
         //根据id,查询分类表
-        System.out.println(categoryIds);
         List<Category> categories = listByIds(categoryIds);
-        System.out.println(categories);
         //正常状态
 
               categories = categories.stream()
@@ -61,6 +62,25 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
             categoryVo.setId(categoryVo.getCategoryId());
         }
         return ResponseResult.okResult(categoryVos);
+    }
+
+    @Override
+    public ResponseResult getCategoryListPage(Integer pageNum, Integer pageSize, String name, String status) {
+        LambdaQueryWrapper<Category> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        if (Strings.hasText(name)){
+            lambdaQueryWrapper.like(Category::getName,name);
+        }
+        if (Strings.hasText(status)){
+            lambdaQueryWrapper.eq(Category::getStatus,status);
+        }
+        long total = count(lambdaQueryWrapper);
+        Page<Category> categoryPage = new Page<>(pageNum,pageSize);
+        List<Category> categories = page(categoryPage, lambdaQueryWrapper).getRecords();
+        List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(categories, CategoryVo.class);
+        for (CategoryVo categoryVo : categoryVos) {
+            categoryVo.setId(categoryVo.getCategoryId());
+        }
+        return ResponseResult.okResult(new PageVo(categoryVos,total));
     }
 
 }

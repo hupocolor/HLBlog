@@ -35,8 +35,8 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/login").anonymous()
-                .requestMatchers("/logout").authenticated()
-//                .requestMatchers("/upload").authenticated()
+//                .requestMatchers("/logout").authenticated()
+                .requestMatchers("/upload").authenticated()
                 .requestMatchers("/user/userInfo").authenticated()
                 .anyRequest().permitAll();
         http.logout().disable();

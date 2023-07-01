@@ -13,5 +13,7 @@ import com.hl.domain.entity.Link;
 public interface LinkService extends IService<Link> {
 
     ResponseResult getAllLinkResult();
+
+    ResponseResult listByKeywords(Integer pageNum, Integer pageSize, String name, String status);
 }
 
